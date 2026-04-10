@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANTUKAM PARFUMS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Georgia", serif;
+    }
+
+    html, body {
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      color: #fff;
+      overflow-x: hidden;
+      background: #050505;
+      position: relative;
+      cursor: none;
+    }
+
+    @media (pointer: coarse) {
+      body {
+        cursor: auto;
+      }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      background:
+        linear-gradient(180deg, rgba(5, 5, 5, 0.18) 0%, rgba(0, 0, 0, 0.92) 100%),
+        url("imagenes/fondo-lujo-horizontal.jpg") center center / cover no-repeat;
+      filter: saturate(0.98) contrast(1.12) brightness(0.50);
+      transform: scale(1.06);
+      animation: backgroundZoom 18s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 232, 180, 0.20), transparent 24%),
+        radial-gradient(circle at 15% 76%, rgba(255, 255, 255, 0.05), transparent 18%),
+        radial-gradient(circle at 82% 58%, rgba(216, 192, 138, 0.09), transparent 22%),
+        radial-gradient(circle at 60% 80%, rgba(140, 110, 40, 0.08), transparent 18%);
+      filter: blur(14px);
+      animation: lightSweep 9s ease-in-out infinite alternate;
+      opacity: 0.95;
+    }
+
+    @keyframes backgroundZoom {
+      from { transform: scale(1.04) translate3d(0, 0, 0); }
+      to { transform: scale(1.12) translate3d(-1.2%, -0.8%, 0); }
+    }
+
+    @keyframes lightSweep {
+      from { transform: translate3d(-1.5%, -1%, 0) scale(1); opacity: 0.78; }
+      to { transform: translate3d(1.5%, 1.2%, 0) scale(1.05); opacity: 1; }
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      opacity: 0.95;
+    }
+
+    .cursor-glow,
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.25s ease;
+    }
+
+    .cursor-glow {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 223, 160, 0.22) 0%, rgba(255, 223, 160, 0.08) 35%, transparent 72%);
+      filter: blur(6px);
+    }
+
+    .cursor-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 240, 205, 0.95);
+      box-shadow: 0 0 18px rgba(216, 192, 138, 0.55);
+    }
+
+    @media (pointer: fine) {
+      body:hover .cursor-glow,
+      body:hover .cursor-dot {
+        opacity: 1;
+      }
+    }
+
+    .screen {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.65s ease, transform 0.65s ease, filter 0.65s ease;
+    }
+
+    .screen.hidden {
+      display: none;
+    }
+
+    .screen.fade-in {
+      animation: screenEnter 0.75s ease forwards;
+    }
+
+    .screen.fade-out {
+      animation: screenExit 0.45s ease forwards;
+    }
+
+    @keyframes screenEnter {
+      from {
+        opacity: 0;
+        transform: scale(1.02) translateY(18px);
+        filter: blur(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes screenExit {
+      from {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.99) translateY(-10px);
+        filter: blur(8px);
+      }
+    }
+
+    .intro {
+      text-align: center;
+      padding: 30px;
+      background:
+        radial-gradient(circle at center, rgba(190, 150, 60, 0.14), transparent 40%),
+        linear-gradient(180deg, rgba(9, 9, 9, 0.22) 0%, rgba(2, 2, 2, 0.42) 100%);
+      backdrop-filter: blur(2px);
+    }
+
+    .intro small {
+      letter-spacing: 4px;
+      color: #b89b5f;
+      font-size: 12px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(184, 155, 95, 0.18);
+    }
+
+    .brand {
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 12px;
+      font-weight: 400;
+      margin-top: 20px;
+      color: #f7f1e8;
+      text-shadow:
+        0 0 6px rgba(255, 245, 220, 0.12),
+        0 0 18px rgba(216, 192, 138, 0.18),
+        0 0 36px rgba(216, 192, 138, 0.12);
+      animation: titleFloat 6s ease-in-out infinite alternate;
+    }
+
+    .brand-sub {
+      margin-top: 10px;
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      letter-spacing: 14px;
+      font-style: italic;
+      color: #c9c1b2;
+      text-shadow:
+        0 0 6px rgba(255, 255, 255, 0.08),
+        0 0 18px rgba(184, 155, 95, 0.16);
+      animation: titleFloat 6s ease-in-out infinite alternate-reverse;
+    }
+
+    .tagline {
+      margin-top: 20px;
+      color: #9a9a9a;
+      font-style: italic;
+      font-size: 16px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+
+    .discover-btn {
+      margin-top: 35px;
+      padding: 14px 34px;
+      border: 1px solid #b89b5f;
+      border-radius: 999px;
+      background: rgba(184, 155, 95, 0.08);
+      color: #f3e6c8;
+      font-size: 15px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.35s ease;
+      box-shadow: 0 0 20px rgba(184, 155, 95, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .discover-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+      transform: translateX(-120%);
+      transition: transform 0.7s ease;
+    }
+
+    .discover-btn:hover::before {
+      transform: translateX(120%);
+    }
+
+    .discover-btn:hover {
+      background: rgba(184, 155, 95, 0.18);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 30px rgba(184, 155, 95, 0.28);
+    }
+
+    .catalog {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center top, rgba(205, 170, 90, 0.14), transparent 26%),
+        radial-gradient(circle at left bottom, rgba(30, 60, 120, 0.14), transparent 22%),
+        radial-gradient(circle at right bottom, rgba(255, 208, 110, 0.08), transparent 20%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.20) 0%, rgba(2, 2, 2, 0.84) 100%);
+      backdrop-filter: blur(1px);
+    }
+
+    .topbar {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      pointer-events: auto;
+    }
+
+    .back-btn {
+      position: relative;
+      z-index: 1001;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: 0.25s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 20px rgba(255,255,255,0.08);
+    }
+
+    .topbar h2 {
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: #e0c98f;
+      text-transform: uppercase;
+      opacity: 0.95;
+      text-shadow: 0 0 12px rgba(216, 192, 138, 0.22);
+    }
+
+    .catalog-layout {
+      width: 100%;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 188px minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .menu-dock {
+      position: relative;
+      min-height: 100vh;
+      overflow: visible;
+      z-index: 30;
+    }
+
+    .catalog-main {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 96px 28px 48px;
+      position: relative;
+    }
+
+    .hero-inner {
+      width: min(1120px, 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .big-title {
+      position: absolute;
+      top: 1%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      text-align: center;
+      font-size: clamp(3rem, 10vw, 7rem);
+      letter-spacing: 10px;
+      font-weight: 700;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
+      background: linear-gradient(180deg, #fff3c9 0%, #efd27a 34%, #c88f28 60%, #fff0b8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 10px rgba(255, 231, 170, 0.18)) drop-shadow(0 0 24px rgba(184, 155, 95, 0.24));
+      text-shadow:
+        0 0 8px rgba(255, 231, 170, 0.12),
+        0 0 24px rgba(216, 192, 138, 0.18),
+        0 0 40px rgba(216, 192, 138, 0.08);
+      animation: titleGlow 4s ease-in-out infinite alternate, titleFloat 5.5s ease-in-out infinite alternate;
+      transform: none;
+    }
+
+    .carousel {
+      width: min(1080px, 100%);
+      display: grid;
+      grid-template-columns: 68px 1fr 68px;
+      align-items: center;
+      gap: 8px;
+      z-index: 3;
+      position: relative;
+      margin-top: 18px;
+    }
+
+    .arrow {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      cursor: pointer;
+      font-size: 28px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto;
+      transition: 0.28s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 18px rgba(0,0,0,0.18);
+      position: relative;
+      z-index: 6;
+    }
+
+    .arrow:hover {
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 0 24px rgba(255,255,255,0.12);
+    }
+
+    .showcase {
+      position: relative;
+      width: 100%;
+      min-height: 430px;
+      display: grid;
+      place-items: center;
+      perspective: 1400px;
+      transform-style: preserve-3d;
+      overflow: visible;
+    }
+
+    .bottle-stage {
+      position: relative;
+      width: min(560px, 94vw);
+      height: 490px;
+      display: grid;
+      place-items: center;
+      perspective: 1400px;
+      transform-style: preserve-3d;
+      overflow: visible;
+      animation: stageFloat 6s ease-in-out infinite alternate;
+    }
+
+    .bottle {
+      width: 270px;
+      max-width: 62vw;
+      height: auto;
+      filter:
+        drop-shadow(0 24px 18px rgba(0,0,0,0.34))
+        drop-shadow(0 38px 40px rgba(0,0,0,0.62));
+      position: relative;
+      z-index: 3;
+      transform-origin: center center;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      animation: bottleFloat 4.2s ease-in-out infinite alternate;
+      transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .bottle:hover {
+      transform: scale(1.05) translateY(-6px) rotateZ(-1deg);
+      filter:
+        drop-shadow(0 30px 25px rgba(0,0,0,0.4))
+        drop-shadow(0 45px 55px rgba(0,0,0,0.68))
+        drop-shadow(0 0 18px rgba(216, 192, 138, 0.22));
+    }
+
+    .side-bottles {
+      position: absolute;
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      top: 50%;
+      transform: translateY(-10%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .side-bottles img {
+      width: 108px;
+      opacity: 0.30;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.55));
+      transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+      will-change: transform, opacity;
+      animation: sideFloat 4.8s ease-in-out infinite alternate;
+    }
+
+    .side-bottles img.side-pop-left {
+      animation: sidePopLeft 0.65s cubic-bezier(.2,.8,.2,1), sideFloat 4.8s ease-in-out 0.65s infinite alternate;
+    }
+
+    .side-bottles img.side-pop-right {
+      animation: sidePopRight 0.65s cubic-bezier(.2,.8,.2,1), sideFloat 4.8s ease-in-out 0.65s infinite alternate;
+    }
+
+    .info {
+      width: min(560px, 100%);
+      text-align: center;
+      z-index: 5;
+      margin-top: -24px;
+      position: relative;
+    }
+
+    .info h3 {
+      font-size: 28px;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      color: #f7f1e5;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.08),
+        0 0 20px rgba(216,192,138,0.12);
+      animation: titleFloat 5.5s ease-in-out infinite alternate;
+    }
+
+    .buy-btn {
+      padding: 12px 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(184,155,95,0.7);
+      background: rgba(184,155,95,0.09);
+      color: #f4e7c9;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: 0.28s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 18px rgba(184,155,95,0.12);
+    }
+
+    .buy-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.16) 50%, transparent 100%);
+      transform: translateX(-120%);
+      transition: transform 0.75s ease;
+    }
+
+    .buy-btn:hover::before {
+      transform: translateX(120%);
+    }
+
+    .buy-btn:hover {
+      background: rgba(184,155,95,0.18);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 26px rgba(184,155,95,0.25);
+    }
+
+    .dots {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.28);
+      transition: 0.25s ease;
+    }
+
+    .dot.active {
+      background: #d8c08a;
+      box-shadow: 0 0 12px rgba(216,192,138,0.7);
+      transform: scale(1.2);
+    }
+
+    .side-menu-shell {
+      position: sticky;
+      top: 58%;
+      transform: translateY(-50%);
+      margin-top: 0;
+      width: 188px;
+      height: fit-content;
+      z-index: 30;
+      display: flex;
+      align-items: stretch;
+      transition: transform 0.48s cubic-bezier(.18,.9,.18,1);
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.35));
+      will-change: transform;
+    }
+
+    .side-menu-shell.closed {
+      transform: translate(-134px, -50%);
+    }
+
+    .side-menu-panel {
+      width: 146px;
+      max-height: 72vh;
+      overflow-y: auto;
+      padding: 12px 12px 14px;
+      border-radius: 0 18px 18px 0;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-left: none;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+      transform: translateX(0);
+      opacity: 1;
+      transition: transform 0.48s cubic-bezier(.18,.9,.18,1), opacity 0.48s ease;
+      pointer-events: auto;
+    }
+
+    .side-menu-shell.closed .side-menu-panel {
+      opacity: 0.12;
+    }
+
+    .side-menu-tab {
+      width: 42px;
+      border: 1px solid rgba(216,192,138,0.34);
+      border-left: none;
+      border-radius: 0 14px 14px 0;
+      background: linear-gradient(180deg, rgba(216,192,138,0.16), rgba(184,155,95,0.08));
+      color: #fff4d4;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+      backdrop-filter: blur(12px);
+      transition: 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0;
+      position: relative;
+      overflow: hidden;
+      align-self: center;
+      min-height: 104px;
+    }
+
+    .side-menu-tab:hover {
+      background: linear-gradient(180deg, rgba(216,192,138,0.22), rgba(184,155,95,0.12));
+      transform: translateX(2px);
+    }
+
+    .tab-icon {
+      font-size: 16px;
+      line-height: 1;
+      text-shadow: 0 0 12px rgba(255, 233, 170, 0.35);
+      animation: iconPulse 2.8s ease-in-out infinite alternate;
+    }
+
+    .tab-text {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    @keyframes iconPulse {
+      from { transform: scale(1); opacity: 0.85; }
+      to { transform: scale(1.12); opacity: 1; }
+    }
+
+    .side-menu-panel h4 {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #e0c98f;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(216,192,138,0.18);
+    }
+
+    .category-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+      justify-content: center;
+    }
+
+    .category-chip {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: #f1e5bc;
+      border-radius: 999px;
+      padding: 6px 9px;
+      cursor: pointer;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .category-chip:hover {
+      transform: translateY(-1px);
+      background: rgba(184,155,95,0.12);
+    }
+
+    .category-chip.active {
+      background: rgba(216,192,138,0.18);
+      border-color: rgba(216,192,138,0.65);
+      box-shadow: 0 0 16px rgba(216,192,138,0.16);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .menu-btn {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: #f4e7c9;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.22s ease;
+      box-shadow: 0 0 12px rgba(0,0,0,0.12);
+    }
+
+    .menu-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      background: rgba(184,155,95,0.14);
+      box-shadow: 0 0 18px rgba(184,155,95,0.18);
+    }
+
+    .menu-btn.active {
+      background: rgba(216,192,138,0.18);
+      border-color: rgba(216,192,138,0.65);
+      box-shadow: 0 0 18px rgba(216,192,138,0.24);
+    }
+
+    .detail {
+      min-height: 100vh;
+      position: relative;
+      background:
+        radial-gradient(circle at center top, rgba(205, 170, 90, 0.12), transparent 26%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.22) 0%, rgba(2, 2, 2, 0.76) 100%);
+      padding: 100px 18px 50px;
+      overflow: hidden;
+    }
+
+    .detail::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 220, 155, 0.16), transparent 65%);
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(30px);
+      pointer-events: none;
+      animation: glowMove 4s ease-in-out infinite alternate;
+    }
+
+    .detail-card {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.35),
+        0 0 30px rgba(216,192,138,0.08);
+      backdrop-filter: blur(14px);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+    }
+
+    .detail.show .detail-card {
+      animation: cardEnter 0.85s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    @keyframes cardEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.92);
+        filter: blur(8px);
+      }
+      55% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.02);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .detail-image {
+      width: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    .detail-image img {
+      width: min(360px, 84%);
+      max-width: 100%;
+      filter: drop-shadow(0 30px 35px rgba(0,0,0,0.65));
+      transition: 0.3s ease;
+      animation: bottleFloat 4.2s ease-in-out infinite alternate;
+    }
+
+    .detail-text h3 {
+      font-size: 34px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: #f7f1e5;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.08),
+        0 0 20px rgba(216,192,138,0.12);
+    }
+
+    .detail-text .brief {
+      color: #d0d0d0;
+      line-height: 1.7;
+      margin-bottom: 22px;
+      font-size: 16px;
+      white-space: pre-line;
+    }
+
+    .detail-text .mlbox {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(216,192,138,0.14);
+      color: #f5f1e8;
+      font-size: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .price-row:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 0 18px rgba(216,192,138,0.10);
+    }
+
+    .price-row span:last-child {
+      color: #d8c08a;
+      font-weight: bold;
+    }
+
+    .detail-actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn {
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 0 16px rgba(255,255,255,0.06);
+    }
+
+    @keyframes entrarDerecha {
+      from {
+        opacity: 0;
+        transform: translateX(150px) scale(0.80) rotateY(24deg) rotateZ(7deg);
+        filter: blur(4px);
+      }
+      45% {
+        opacity: 1;
+        transform: translateX(-10px) scale(1.05) rotateY(-5deg) rotateZ(-1deg);
+        filter: blur(0);
+      }
+      75% {
+        opacity: 1;
+        transform: translateX(6px) scale(0.995) rotateY(1deg) rotateZ(0deg);
+        filter: blur(0);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotateY(0deg) rotateZ(0deg);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes salirIzquierda {
+      from {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotateY(0deg) rotateZ(0deg);
+        filter: blur(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(-150px) scale(0.80) rotateY(-24deg) rotateZ(-7deg);
+        filter: blur(4px);
+      }
+    }
+
+    @keyframes entrarIzquierda {
+      from {
+        opacity: 0;
+        transform: translateX(-150px) scale(0.80) rotateY(-24deg) rotateZ(-7deg);
+        filter: blur(4px);
+      }
+      45% {
+        opacity: 1;
+        transform: translateX(10px) scale(1.05) rotateY(5deg) rotateZ(1deg);
+        filter: blur(0);
+      }
+      75% {
+        opacity: 1;
+        transform: translateX(-6px) scale(0.995) rotateY(-1deg) rotateZ(0deg);
+        filter: blur(0);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotateY(0deg) rotateZ(0deg);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes salirDerecha {
+      from {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotateY(0deg) rotateZ(0deg);
+        filter: blur(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(150px) scale(0.80) rotateY(24deg) rotateZ(7deg);
+        filter: blur(4px);
+      }
+    }
+
+    @keyframes titleGlow {
+      from {
+        text-shadow:
+          0 0 8px rgba(255, 255, 255, 0.08),
+          0 0 20px rgba(216, 192, 138, 0.14),
+          0 0 40px rgba(216, 192, 138, 0.08);
+        filter: drop-shadow(0 0 10px rgba(255, 231, 170, 0.16)) drop-shadow(0 0 24px rgba(184, 155, 95, 0.20));
+      }
+      to {
+        text-shadow:
+          0 0 12px rgba(255, 255, 255, 0.12),
+          0 0 30px rgba(216, 192, 138, 0.25),
+          0 0 55px rgba(216, 192, 138, 0.14);
+        filter: drop-shadow(0 0 14px rgba(255, 231, 170, 0.24)) drop-shadow(0 0 30px rgba(184, 155, 95, 0.28));
+      }
+    }
+
+    @keyframes bottleFloat {
+      0% { transform: translateY(0px) rotateZ(-0.8deg) scale(1); }
+      50% { transform: translateY(-16px) rotateZ(0.8deg) scale(1.01); }
+      100% { transform: translateY(0px) rotateZ(-0.5deg) scale(1); }
+    }
+
+    @keyframes stageFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes sideFloat {
+      0% { transform: translateY(0px) scale(1) rotate(0deg); }
+      50% { transform: translateY(-14px) scale(1.05) rotate(0.6deg); }
+      100% { transform: translateY(0px) scale(1) rotate(0deg); }
+    }
+
+    @keyframes sidePopLeft {
+      0% { transform: translateX(0) scale(0.92) rotate(-3deg); opacity: 0.12; }
+      50% { transform: translateX(-26px) scale(1.10) rotate(4deg); opacity: 0.42; }
+      100% { transform: translateX(0) scale(1) rotate(0deg); opacity: 0.30; }
+    }
+
+    @keyframes sidePopRight {
+      0% { transform: translateX(0) scale(0.92) rotate(3deg); opacity: 0.12; }
+      50% { transform: translateX(26px) scale(1.10) rotate(-4deg); opacity: 0.42; }
+      100% { transform: translateX(0) scale(1) rotate(0deg); opacity: 0.30; }
+    }
+
+    @keyframes titleFloat {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-4px); }
+    }
+
+    @keyframes glowMove {
+      from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 0.7;
+      }
+      to {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 1;
+      }
+    }
+
+    .animar-entrada-derecha {
+      animation: entrarDerecha 0.95s cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .animar-salida-izquierda {
+      animation: salirIzquierda 0.55s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .animar-entrada-izquierda {
+      animation: entrarIzquierda 0.95s cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .animar-salida-derecha {
+      animation: salirDerecha 0.55s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .cinematic-flash {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      background: radial-gradient(circle at center, rgba(255, 235, 190, 0.18), rgba(255, 255, 255, 0.04), transparent 65%);
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+
+    .cinematic-flash.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 1200px) {
+      .catalog-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-dock {
+        min-height: auto;
+        position: fixed;
+        left: 0;
+        top: 58%;
+        transform: translateY(-50%);
+        width: auto;
+      }
+
+      .catalog-main {
+        padding-left: 18px;
+      }
+
+      .side-menu-shell {
+        position: relative;
+      }
+
+      .side-menu-shell.closed {
+        transform: translate(-134px, -50%);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .detail-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .price-row {
+        text-align: left;
+      }
+
+      .carousel {
+        grid-template-columns: 54px 1fr 54px;
+      }
+
+      .bottle-stage {
+        width: min(560px, 94vw);
+        height: 470px;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .big-title {
+        top: 7%;
+        letter-spacing: 6px;
+      }
+
+      .brand {
+        letter-spacing: 8px;
+      }
+
+      .brand-sub {
+        letter-spacing: 8px;
+      }
+
+      .showcase {
+        min-height: 420px;
+      }
+
+      .bottle {
+        width: 220px;
+      }
+
+      .side-bottles img {
+        width: 82px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar h2 {
+        display: none;
+      }
+
+      .big-title {
+        top: 9%;
+        font-size: 2.4rem;
+      }
+
+      .carousel {
+        grid-template-columns: 38px 1fr 38px;
+      }
+
+      .side-bottles img {
+        width: 64px;
+      }
+
+      .bottle {
+        width: 190px;
+      }
+
+      .bottle-stage {
+        height: 420px;
+      }
+
+      .info h3 {
+        font-size: 22px;
+      }
+
+      .detail-text h3 {
+        font-size: 26px;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .side-menu-shell {
+        width: 176px;
+      }
+
+      .side-menu-panel {
+        width: 136px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas class="particles" id="particles"></canvas>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cinematic-flash" id="cinematicFlash"></div>
+
+  <section id="intro" class="screen intro">
+    <div>
+      <small>Colección Privée</small>
+      <div class="brand">ANTUKAM</div>
+      <div class="brand-sub">PARFUMS</div>
+      <div class="tagline">El arte de las fragancias</div>
+      <button class="discover-btn" id="btnDescubrir" type="button">DESCUBRIR</button>
+    </div>
+  </section>
+
+  <section id="catalogo" class="screen catalog hidden">
+    <div class="topbar">
+      <button class="back-btn" id="btnVolverInicio" type="button">← Volver</button>
+      <h2>ANTUKAM PARFUMS</h2>
+      <div style="width: 96px;"></div>
+    </div>
+
+    <div class="catalog-layout">
+      <div class="menu-dock">
+        <aside class="side-menu-shell" id="sideMenuShell">
+          <div class="side-menu-panel">
+            <h4>Elegir número</h4>
+
+            <div class="category-row" id="categoryRow">
+              <button class="category-chip active" type="button" data-filter="all">✦ Todos</button>
+              <button class="category-chip" type="button" data-filter="1-10">Ⅰ 1-10</button>
+              <button class="category-chip" type="button" data-filter="11-20">Ⅱ 11-20</button>
+              <button class="category-chip" type="button" data-filter="21-30">Ⅲ 21-30</button>
+            </div>
+
+            <div class="menu-grid" id="menuNumeros"></div>
+          </div>
+
+          <button class="side-menu-tab" id="menuTab" type="button" aria-label="Abrir o cerrar menú">
+            <span class="tab-icon">☰</span>
+            <span class="tab-text">PERFUMES</span>
+          </button>
+        </aside>
+      </div>
+
+      <main class="catalog-main">
+        <div class="hero-inner">
+          <div class="big-title">ANTUKAM</div>
+
+          <div class="carousel">
+            <button class="arrow" id="btnAnterior" type="button">‹</button>
+
+            <div class="showcase">
+              <div class="side-bottles">
+                <img id="sideLeft" src="" alt="Perfume anterior" />
+                <img id="sideRight" src="" alt="Perfume siguiente" />
+              </div>
+
+              <div class="bottle-stage">
+                <img id="botella" class="bottle" src="" alt="Perfume destacado" />
+              </div>
+            </div>
+
+            <button class="arrow" id="btnSiguiente" type="button">›</button>
+          </div>
+
+          <div class="info">
+            <h3 id="nombrePerfume"></h3>
+            <button class="buy-btn" id="btnExplorar" type="button">Explorar ahora</button>
+            <div class="dots" id="dots"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <section id="detalle" class="screen detail hidden">
+    <div class="detail-card">
+      <div class="detail-image">
+        <img id="detalleImagen" src="" alt="Perfume" />
+      </div>
+
+      <div class="detail-text">
+        <h3 id="detalleNombre"></h3>
+        <p class="brief" id="detalleDescripcion"></p>
+
+        <div class="mlbox">
+          <div class="price-row">
+            <span>Presentación 5 ml</span>
+            <span id="precio5ml"></span>
+          </div>
+
+          <div class="price-row">
+            <span>Presentación 3 ml</span>
+            <span id="precio3ml"></span>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <button class="ghost-btn" id="btnRegresarCatalogo" type="button">← Regresar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const perfumes = [
+      {
+        nombre: "Phantom My Hero",
+        descripcion: "Phantom My Hero tiene un aroma moderno, limpio y elegante.\nAbre con una salida fresca y suave que da sensación de pulcritud.\nDespués se vuelve más cálido y envolvente, sin ser pesado.\nEs ideal para la escuela, salidas casuales y momentos del día.\nTambién funciona muy bien en reuniones, citas o eventos tranquilos.\nDeja una presencia agradable y discreta, pero con estilo.",
+        imagen: "imagenes/perfume1.png",
+        imagenDetalle: "imagenes/perfumes1.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$60 MXN",
+      },
+      {
+        nombre: "Asad Zanzibar",
+        descripcion: "Asad Zanzibar es una fragancia fresca y sofisticada con un toque exótico.\nAbre con notas limpias y vibrantes que transmiten energía y seguridad.\nPoco a poco evoluciona hacia un aroma más cálido con un fondo ligeramente especiado.\nEs perfecto para el día a día, especialmente en climas cálidos o salidas casuales.\nTambién destaca en reuniones o momentos donde quieres proyectar confianza.\nDeja una estela atractiva, moderna y muy agradable.",
+        imagen: "imagenes/perfume2.png",
+        imagenDetalle: "imagenes/perfumes2.png",
+        precio5ml: "$80 MXN",
+        precio3ml: "$50 MXN",
+      },
+      {
+        nombre: "9PM",
+        descripcion: "Una fragancia sofisticada y cautivadora que destaca por su equilibrio entre dulzura y carácter.\nSus notas de vainilla, ámbar y un sutil toque especiado crean un aroma cálido, elegante y profundamente atractivo.\nIdeal para ocasiones especiales, salidas nocturnas o momentos en los que deseas proyectar seguridad y estilo.\nUna elección perfecta para quienes buscan dejar una impresión inolvidable.",
+        imagen: "imagenes/perfume3.png",
+        imagenDetalle: "imagenes/perfumes3.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$60 MXN",
+      },
+      {
+        nombre: "His Confession",
+        descripcion: "Una fragancia elegante y envolvente que combina notas dulces con un fondo cálido y ligeramente especiado.\nSu aroma proyecta sofisticación y confianza, logrando un equilibrio perfecto entre lo moderno y lo clásico.\nIdeal para ocasiones especiales, reuniones importantes o salidas nocturnas donde quieras destacar con discreción y estilo.\nUna excelente opción para quien busca un aroma distintivo, refinado y memorable.",
+        imagen: "imagenes/perfume4.png",
+        imagenDetalle: "imagenes/perfumes4.png",
+        precio5ml: "$160 MXN",
+        precio3ml: "$100 MXN",
+      },
+      {
+        nombre: "Bad Boy Cobalt",
+        descripcion: "Una fragancia moderna y sofisticada que combina frescura con un carácter mineral y amaderado.\nSus notas destacan por un equilibrio entre lo aromático y lo elegante, creando un aroma limpio, masculino y muy atractivo.\nPerfecto para uso diario, reuniones importantes o salidas donde quieras proyectar seguridad, frescura y estilo sin ser excesivo.\nUna elección ideal para quien busca destacar con elegancia y personalidad.",
+        imagen: "imagenes/perfume5.png",
+        imagenDetalle: "imagenes/perfumes5.png",
+        precio5ml: "$180 MXN",
+        precio3ml: "$110 MXN",
+      },
+      {
+        nombre: "Versace Eros",
+        descripcion: "Tiene un aroma dulce, fresco y muy seductor.\nAbre con una sensación vibrante que llama la atención desde el primer momento.\nDespués se vuelve más cálido y masculino, con un fondo intenso y agradable.\nEs de esos perfumes que dejan presencia sin sentirse pesados.\nIdeal para salidas de noche, citas y eventos donde quieres destacar.\nTambién funciona muy bien en reuniones casuales con estilo.\nEs perfecto para quien quiere oler atractivo, fuerte y moderno.",
+        imagen: "imagenes/perfume6.png",
+        imagenDetalle: "imagenes/perfumes6.png",
+        precio5ml: "$200 MXN",
+        precio3ml: "$120 MXN",
+      },
+      {
+        nombre: "Montale Day Dreams",
+        descripcion: "Su olor es suave, cremoso y muy envolvente.\nTiene una sensación floral y delicada con un toque cálido muy refinado.\nEs un perfume que transmite elegancia y calma al mismo tiempo.\nSe siente fino, distinguido y con un aire ligeramente romántico.\nPerfecto para cenas, salidas especiales y momentos más tranquilos.\nTambién queda muy bien en ocasiones donde quieres oler diferente y sofisticado.\nEs ideal para quien busca un aroma delicado pero con personalidad.",
+        imagen: "imagenes/perfume7.png",
+        imagenDetalle: "imagenes/perfumes7.png",
+        precio5ml: "$280 MXN",
+        precio3ml: "$170 MXN",
+      },
+      {
+        nombre: "Le Beau EDT",
+        descripcion: "Tiene un aroma fresco, dulce y muy juvenil.\nSe siente limpio, luminoso y con una vibra tropical muy atractiva.\nEs de esos perfumes que dan una impresión alegre y moderna.\nSu aroma es fácil de llevar y muy agradable para muchas personas.\nVa perfecto para el día, salidas casuales y climas cálidos.\nTambién funciona muy bien para citas relajadas y reuniones informales.\nEs ideal para quien quiere oler rico, fresco y con estilo.",
+        imagen: "imagenes/perfume8.png",
+        imagenDetalle: "imagenes/perfumes8.png",
+        precio5ml: "$200 MXN",
+        precio3ml: "$120 MXN",
+      },
+      {
+        nombre: "Xerjoff Torino 22",
+        descripcion: "Su aroma es refinado, limpio y lleno de presencia.\nTiene una salida elegante que se siente cara y bien construida.\nConforme avanza, deja una sensación cálida, distinguida y muy pulida.\nEs un perfume que habla de lujo sin necesidad de exagerar.\nPerfecto para eventos formales, cenas importantes y ocasiones especiales.\nTambién se luce muchísimo en reuniones donde quieres proyectar clase.\nEs ideal para alguien que busca un aroma exclusivo y memorable.",
+        imagen: "imagenes/perfume9.png",
+        imagenDetalle: "imagenes/perfumes9.png",
+        precio5ml: "$550 MXN",
+        precio3ml: "$330 MXN",
+      },
+      {
+        nombre: "Nautica Voyage",
+        descripcion: "Tiene un olor fresco, acuático y muy limpio.\nSe siente ligero, relajado y súper fácil de usar todos los días.\nSu aroma recuerda a aire abierto, frescura y comodidad.\nEs un perfume que transmite sencillez, juventud y buena vibra.\nPerfecto para el día a día, escuela, trabajo o salidas casuales.\nTambién va muy bien en calor porque no se siente pesado.\nEs ideal para quien busca oler fresco, limpio y agradable.",
+        imagen: "imagenes/perfume10.png",
+        imagenDetalle: "imagenes/perfumes10.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$60 MXN",
+      },
+      {
+        nombre: "Khamrah",
+        descripcion: "Tiene un aroma dulce, cálido y muy envolvente.\nSe siente intenso, especiado y con un toque gourmand muy atractivo.\nEs de esos perfumes que llenan el ambiente de manera elegante.\nSu olor transmite comodidad, sofisticación y mucha personalidad.\nPerfecto para noches, clima fresco y eventos especiales.\nTambién queda muy bien en salidas donde quieres dejar huella.\nEs ideal para quien ama los aromas dulces con carácter.",
+        imagen: "imagenes/perfume11.png",
+        imagenDetalle: "imagenes/perfumes11.png",
+        precio5ml: "$130 MXN",
+        precio3ml: "$78 MXN",
+      },
+      {
+        nombre: "Le Beau Le Parfum",
+        descripcion: "Su aroma es más profundo, más intenso y más seductor.\nMantiene la frescura del estilo original, pero con más presencia y madurez.\nTiene un lado dulce y cálido que lo hace muy atractivo.\nSe siente moderno, elegante y con mucha seguridad.\nPerfecto para citas, salidas de noche y momentos donde quieres destacar.\nTambién funciona muy bien en eventos casuales con un toque de estilo.\nEs ideal para alguien que quiere un perfume llamativo y fino.",
+        imagen: "imagenes/perfume12.png",
+        imagenDetalle: "imagenes/perfumes12.png",
+        precio5ml: "$250 MXN",
+        precio3ml: "$150 MXN",
+      },
+      {
+        nombre: "Le Male Elixir",
+        descripcion: "Tiene un aroma dulce, potente y profundamente masculino.\nSe siente cálido desde el inicio, con una intensidad muy atractiva.\nSu olor deja una sensación de lujo, confianza y presencia fuerte.\nEs un perfume que abraza el ambiente y se nota mucho.\nPerfecto para la noche, eventos especiales y salidas donde quieras impresionar.\nTambién va excelente en clima fresco o cuando quieres un aroma más serio.\nEs ideal para quien busca un perfume dulce con mucha personalidad.",
+        imagen: "imagenes/perfume13.png",
+        imagenDetalle: "imagenes/perfumes13.png",
+        precio5ml: "$260 MXN",
+        precio3ml: "$156 MXN",
+      },
+      {
+        nombre: "Honor & Glory",
+        descripcion: "Tiene un olor dulce, cálido y muy llamativo.\nSe siente moderno, con una vibra intensa pero agradable.\nSu aroma transmite fuerza, brillo y un toque elegante.\nEs de esos perfumes que llaman la atención por lo rico que huelen.\nPerfecto para salidas nocturnas, reuniones y ocasiones especiales.\nTambién se luce en climas frescos y ambientes con estilo.\nEs ideal para quien quiere oler dulce, fuerte y memorable.",
+        imagen: "imagenes/perfume14.png",
+        imagenDetalle: "imagenes/perfumes14.png",
+        precio5ml: "$130 MXN",
+        precio3ml: "$80 MXN",
+      },
+      {
+        nombre: "Hawas Ice",
+        descripcion: "Tiene un aroma fresco, limpio y muy energético.\nSe siente ligero pero con una presencia moderna y muy agradable.\nSu olor transmite libertad, comodidad y una vibra juvenil.\nEs perfecto para quienes prefieren perfumes frescos pero con personalidad.\nVa muy bien para el día, calor, escuela o salidas casuales.\nTambién es excelente para uso diario sin sentirse pesado.\nEs ideal para quien busca frescura con un toque elegante.",
+        imagen: "imagenes/perfume15.png",
+        imagenDetalle: "imagenes/perfumes15.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$60 MXN",
+      },
+      {
+        nombre: "Valentino",
+        descripcion: "Tiene un aroma elegante, moderno y muy atractivo.\nSe siente refinado, con una mezcla que proyecta estilo y seguridad.\nSu olor deja una impresión limpia, sensual y bien cuidada.\nEs de esos perfumes que se perciben finos sin ser exagerados.\nPerfecto para citas, cenas, salidas formales y reuniones importantes.\nTambién funciona muy bien cuando quieres verte más pulido y seguro.\nEs ideal para quien busca un aroma sofisticado y versátil.",
+        imagen: "imagenes/perfume16.png",
+        imagenDetalle: "imagenes/perfumes16.png",
+        precio5ml: "$220 MXN",
+        precio3ml: "$132 MXN",
+      },
+      {
+        nombre: "Mancera Coco Vanille",
+        descripcion: "Tiene un aroma dulce, cremoso y envolvente.\nSe siente cálido y tropical, como un abrazo suave y elegante.\nLa vainilla le da una sensación deliciosa y muy reconfortante.\nEs un perfume femenino, rico y muy llamativo sin perder fineza.\nPerfecto para citas, salidas especiales y eventos donde quieres destacar.\nTambién queda hermoso en clima fresco o en la noche.\nEs ideal para quien ama los aromas dulces y cremosos.",
+        imagen: "imagenes/perfume17.png",
+        imagenDetalle: "imagenes/perfumes17.png",
+        precio5ml: "$280 MXN",
+        precio3ml: "$168 MXN",
+      },
+      {
+        nombre: "Qaed Al Fursan Unlimited",
+        descripcion: "Tiene un olor dulce, tropical y muy jugoso.\nSe siente alegre, fresco y con una vibra exótica muy marcada.\nEs un perfume que transmite energía y personalidad desde el inicio.\nSu aroma resulta agradable, moderno y fácil de disfrutar.\nPerfecto para el día, salidas casuales y climas cálidos.\nTambién funciona muy bien cuando quieres oler diferente sin complicarte.\nEs ideal para quien busca un aroma dulce y dinámico.",
+        imagen: "imagenes/perfume18.png",
+        imagenDetalle: "imagenes/perfumes18.png",
+        precio5ml: "$80 MXN",
+        precio3ml: "$48 MXN",
+      },
+      {
+        nombre: "Erba Pura",
+        descripcion: "Tiene un aroma frutal, dulce y muy brillante.\nSe siente lujoso, intenso y con mucha presencia desde el primer momento.\nSu olor es alegre pero también elegante y sofisticado.\nEs de esos perfumes que dejan una estela muy memorable.\nPerfecto para eventos, salidas importantes y noches especiales.\nTambién funciona muy bien cuando quieres destacar bastante.\nEs ideal para quien busca un aroma potente, moderno y exclusivo.",
+        imagen: "imagenes/perfume19.png",
+        imagenDetalle: "imagenes/perfumes19.png",
+        precio5ml: "$400 MXN",
+        precio3ml: "$240 MXN",
+      },
+      {
+        nombre: "Arabians Tonka",
+        descripcion: "Tiene un aroma dulce, oscuro y muy envolvente.\nSe siente cálido, profundo y con un carácter bastante elegante.\nLa combinación de dulzor y fuerza lo hace muy adictivo.\nEs un perfume que proyecta misterio, lujo y seguridad.\nPerfecto para noches, clima fresco y ocasiones especiales.\nTambién es excelente para salidas donde quieres dejar una impresión fuerte.\nEs ideal para quien ama los aromas intensos y sofisticados.",
+        imagen: "imagenes/perfume20.png",
+        imagenDetalle: "imagenes/perfumes20.png",
+        precio5ml: "$280 MXN",
+        precio3ml: "$168 MXN",
+      },
+      {
+        nombre: "Le Male Le Parfum",
+        descripcion: "Tiene un aroma elegante, dulce y muy refinado.\nSe siente más serio y profundo, con un aire muy seductor.\nSu olor transmite seguridad, madurez y mucho estilo.\nEs de esos perfumes que se notan sin necesitar exagerar.\nPerfecto para citas, cenas, eventos nocturnos y ocasiones especiales.\nTambién va muy bien en salidas donde quieres verte bien presentado.\nEs ideal para quien busca un perfume masculino y distinguido.",
+        imagen: "imagenes/perfume21.png",
+        imagenDetalle: "imagenes/perfumes21.png",
+        precio5ml: "$220 MXN",
+        precio3ml: "$132 MXN",
+      },
+      {
+        nombre: "Invictus Parfum",
+        descripcion: "Tiene un aroma fresco, limpio y potente.\nSe siente más intenso y moderno que un fresco común.\nSu olor transmite energía, seguridad y una vibra muy atractiva.\nEs un perfume que proyecta movimiento y confianza.\nPerfecto para el día, salidas casuales y momentos activos.\nTambién funciona muy bien para la noche si quieres algo fresco pero fuerte.\nEs ideal para quien busca un aroma dinámico y masculino.",
+        imagen: "imagenes/perfume22.png",
+        imagenDetalle: "imagenes/perfumes22.png",
+        precio5ml: "$220 MXN",
+        precio3ml: "$132 MXN",
+      },
+      {
+        nombre: "Azzaro The Most Wanted EDP Intense",
+        descripcion: "Tiene un aroma dulce, cálido y muy seductor.\nSe siente intenso, elegante y con una presencia muy marcada.\nSu olor da una impresión moderna, fuerte y bastante atractiva.\nEs un perfume que combina bien lo dulce con lo serio.\nPerfecto para la noche, citas y eventos donde quieres destacar.\nTambién va excelente en clima fresco o salidas especiales.\nEs ideal para quien quiere un aroma impactante y seguro.",
+        imagen: "imagenes/perfume23.png",
+        imagenDetalle: "imagenes/perfumes23.png",
+        precio5ml: "$160 MXN",
+        precio3ml: "$96 MXN",
+      },
+      {
+        nombre: "Versace Pour Homme",
+        descripcion: "Tiene un aroma fresco, limpio y muy clásico.\nSe siente elegante, sencillo y extremadamente agradable.\nSu olor transmite pulcritud, confianza y buena presencia.\nEs de esos perfumes que nunca fallan porque son muy versátiles.\nPerfecto para el día, oficina, escuela o cualquier ocasión casual.\nTambién funciona muy bien en calor por su frescura natural.\nEs ideal para quien busca oler limpio, fino y fácil de llevar.",
+        imagen: "imagenes/perfume24.png",
+        imagenDetalle: "imagenes/perfumes24.png",
+        precio5ml: "$130 MXN",
+        precio3ml: "$78 MXN",
+      },
+      {
+        nombre: "Versace Dylan Blue",
+        descripcion: "Tiene un aroma fresco, oscuro y muy masculino.\nSe siente limpio, moderno y con una profundidad muy interesante.\nSu olor transmite confianza, estilo y una energía elegante.\nEs un perfume versátil que sirve para muchas ocasiones.\nPerfecto para salidas, trabajo, reuniones y uso diario.\nTambién queda muy bien en la noche por su carácter atractivo.\nEs ideal para quien busca un perfume fresco con más fuerza.",
+        imagen: "imagenes/perfume25.png",
+        imagenDetalle: "imagenes/perfumes25.png",
+        precio5ml: "$150 MXN",
+        precio3ml: "$90 MXN",
+      },
+      {
+        nombre: "Elixir 88",
+        descripcion: "Tiene un aroma agradable, moderno y fácil de disfrutar.\nSe siente equilibrado, con una vibra limpia y ligeramente dulce.\nSu olor da una impresión sencilla pero bien lograda.\nEs de esos perfumes que funcionan bien sin complicarse.\nPerfecto para uso diario, salidas casuales y momentos tranquilos.\nTambién va bien cuando quieres oler rico sin usar algo pesado.\nEs ideal para quien busca una opción cómoda y versátil.",
+        imagen: "imagenes/perfume26.png",
+        imagenDetalle: "imagenes/perfumes26.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$60 MXN",
+      },
+      {
+        nombre: "Club de Nuit Urban Man",
+        descripcion: "Tiene un aroma fresco, elegante y con carácter urbano.\nSe siente limpio, moderno y con una vibra muy masculina.\nSu olor deja una impresión seria, atractiva y bastante usable.\nEs un perfume que funciona muy bien para diario.\nPerfecto para trabajo, reuniones, escuela y salidas casuales.\nTambién va excelente cuando quieres verte arreglado sin exagerar.\nEs ideal para quien busca frescura con un toque de presencia.",
+        imagen: "imagenes/perfume27.png",
+        imagenDetalle: "imagenes/perfumes27.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$60 MXN",
+      },
+      {
+        nombre: "Hawas Tropical",
+        descripcion: "Tiene un aroma fresco, frutal y muy alegre.\nSe siente como una brisa cálida con un toque dulce y juvenil.\nSu olor transmite vacaciones, libertad y energía positiva.\nEs un perfume fácil de disfrutar y muy agradable para el día.\nPerfecto para calor, salidas casuales y momentos relajados.\nTambién funciona muy bien cuando quieres oler fresco pero con estilo.\nEs ideal para quien busca un aroma tropical y moderno.",
+        imagen: "imagenes/perfume28.png",
+        imagenDetalle: "imagenes/perfumes28.png",
+        precio5ml: "$120 MXN",
+        precio3ml: "$72 MXN",
+      },
+      {
+        nombre: "Odyssey Artisto",
+        descripcion: "Tiene un aroma interesante, moderno y con personalidad.\nSe siente elegante sin ser demasiado serio, y atractivo sin ser pesado.\nSu olor deja una impresión fresca con un fondo más sofisticado.\nEs de esos perfumes que se sienten distintos y bien cuidados.\nPerfecto para salidas, eventos casuales y ocasiones donde quieres verte bien.\nTambién va muy bien en el día o en reuniones relajadas.\nEs ideal para quien busca un perfume con estilo propio.",
+        imagen: "imagenes/perfume29.png",
+        imagenDetalle: "imagenes/perfumes29.png",
+        precio5ml: "$100 MXN",
+        precio3ml: "$70 MXN",
+      },
+      {
+        nombre: "Odyssey Mega",
+        descripcion: "Tiene un aroma fresco, intenso y muy llamativo.\nSe siente moderno, juvenil y con mucha energía.\nSu olor transmite confianza y una vibra bastante versátil.\nEs un perfume que se puede usar fácil sin perder presencia.\nPerfecto para el día, salidas casuales y uso diario.\nTambién funciona bien cuando quieres oler rico y proyectar seguridad.\nEs ideal para quien busca frescura con un toque más fuerte.",
+        imagen: "imagenes/perfume30.png",
+        imagenDetalle: "imagenes/perfumes30.png",
+        precio5ml: "$80 MXN",
+        precio3ml: "$55 MXN",
+      }
+    ];
+
+    let indice = 0;
+    let bloqueado = false;
+    let timerEntrada = null;
+    let menuAbierto = true;
+    let filtroActual = "all";
+
+    const intro = document.getElementById("intro");
+    const catalogo = document.getElementById("catalogo");
+    const detalle = document.getElementById("detalle");
+
+    const botella = document.getElementById("botella");
+    const sideLeft = document.getElementById("sideLeft");
+    const sideRight = document.getElementById("sideRight");
+
+    const nombrePerfume = document.getElementById("nombrePerfume");
+    const dots = document.getElementById("dots");
+
+    const detalleImagen = document.getElementById("detalleImagen");
+    const detalleNombre = document.getElementById("detalleNombre");
+    const detalleDescripcion = document.getElementById("detalleDescripcion");
+    const precio5ml = document.getElementById("precio5ml");
+    const precio3ml = document.getElementById("precio3ml");
+
+    const cursorGlow = document.getElementById("cursorGlow");
+    const cursorDot = document.getElementById("cursorDot");
+    const cinematicFlash = document.getElementById("cinematicFlash");
+
+    const menuNumeros = document.getElementById("menuNumeros");
+    const sideMenuShell = document.getElementById("sideMenuShell");
+    const menuTab = document.getElementById("menuTab");
+    const categoryRow = document.getElementById("categoryRow");
+
+    const btnDescubrir = document.getElementById("btnDescubrir");
+    const btnVolverInicio = document.getElementById("btnVolverInicio");
+    const btnAnterior = document.getElementById("btnAnterior");
+    const btnSiguiente = document.getElementById("btnSiguiente");
+    const btnExplorar = document.getElementById("btnExplorar");
+    const btnRegresarCatalogo = document.getElementById("btnRegresarCatalogo");
+
+    function mostrarSeccion(seccionMostrar, seccionOcultar) {
+      seccionOcultar.classList.remove("fade-in");
+      seccionOcultar.classList.add("fade-out");
+
+      setTimeout(() => {
+        seccionOcultar.classList.add("hidden");
+        seccionOcultar.classList.remove("fade-out");
+
+        seccionMostrar.classList.remove("hidden");
+        seccionMostrar.classList.add("fade-in");
+
+        setTimeout(() => {
+          seccionMostrar.classList.remove("fade-in");
+        }, 800);
+      }, 350);
+    }
+
+    function irAlCatalogo() {
+      detalle.classList.add("hidden");
+      mostrarSeccion(catalogo, intro);
+      if (!menuAbierto) toggleMenu();
+      mostrarPerfume(indice, 1);
+    }
+
+    function volverAlInicio() {
+      detalle.classList.add("hidden");
+      mostrarSeccion(intro, catalogo);
+    }
+
+    function volverAlCatalogo() {
+      detalle.classList.remove("show");
+      mostrarSeccion(catalogo, detalle);
+    }
+
+    function toggleMenu() {
+      menuAbierto = !menuAbierto;
+      sideMenuShell.classList.toggle("closed", !menuAbierto);
+    }
+
+    function getFilteredIndices() {
+      if (filtroActual === "1-10") return perfumes.map((_, i) => i).filter(i => i >= 0 && i <= 9);
+      if (filtroActual === "11-20") return perfumes.map((_, i) => i).filter(i => i >= 10 && i <= 19);
+      if (filtroActual === "21-30") return perfumes.map((_, i) => i).filter(i => i >= 20 && i <= 29);
+      return perfumes.map((_, i) => i);
+    }
+
+    function anterior() {
+      if (bloqueado) return;
+      const indices = getFilteredIndices();
+      const pos = indices.indexOf(indice);
+      const nextPos = (pos - 1 + indices.length) % indices.length;
+      indice = indices[nextPos];
+      mostrarPerfume(indice, -1);
+    }
+
+    function siguiente() {
+      if (bloqueado) return;
+      const indices = getFilteredIndices();
+      const pos = indices.indexOf(indice);
+      const nextPos = (pos + 1) % indices.length;
+      indice = indices[nextPos];
+      mostrarPerfume(indice, 1);
+    }
+
+    function seleccionarPerfume(i) {
+      if (bloqueado || i === indice) {
+        indice = i;
+        renderMenuNumeros();
+        renderDots(indice);
+        return;
+      }
+      const direccion = i > indice ? 1 : -1;
+      indice = i;
+      mostrarPerfume(indice, direccion);
+    }
+
+    function setFiltro(nuevoFiltro) {
+      filtroActual = nuevoFiltro;
+      document.querySelectorAll(".category-chip").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.filter === nuevoFiltro);
+      });
+
+      const disponibles = getFilteredIndices();
+      if (!disponibles.includes(indice)) {
+        indice = disponibles[0] ?? 0;
+      }
+      renderMenuNumeros();
+      renderDots(indice);
+      mostrarPerfume(indice, 1);
+    }
+
+    function renderDots(i) {
+      dots.innerHTML = "";
+      perfumes.forEach((_, idx) => {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (idx === i ? " active" : "");
+        dots.appendChild(dot);
+      });
+    }
+
+    function renderMenuNumeros() {
+      menuNumeros.innerHTML = "";
+      const indices = getFilteredIndices();
+
+      indices.forEach((idx) => {
+        const btn = document.createElement("button");
+        btn.className = "menu-btn" + (idx === indice ? " active" : "");
+        btn.textContent = idx + 1;
+        btn.title = perfumes[idx].nombre || `Perfume ${idx + 1}`;
+        btn.onclick = () => seleccionarPerfume(idx);
+        menuNumeros.appendChild(btn);
+      });
+    }
+
+    function displayText(value, fallback) {
+      if (!value || !String(value).trim()) return fallback;
+      return value;
+    }
+
+    function animateSecondPlane() {
+      sideLeft.classList.remove("side-pop-left");
+      sideRight.classList.remove("side-pop-right");
+      void sideLeft.offsetWidth;
+      void sideRight.offsetWidth;
+      sideLeft.classList.add("side-pop-left");
+      sideRight.classList.add("side-pop-right");
+    }
+
+    function mostrarPerfume(i, direccion = 1) {
+      bloqueado = true;
+      clearTimeout(timerEntrada);
+
+      cinematicFlash.classList.add("show");
+      setTimeout(() => cinematicFlash.classList.remove("show"), 180);
+
+      botella.classList.remove(
+        "animar-entrada-derecha",
+        "animar-salida-izquierda",
+        "animar-entrada-izquierda",
+        "animar-salida-derecha"
+      );
+
+      if (direccion === 1) {
+        botella.classList.add("animar-salida-izquierda");
+      } else {
+        botella.classList.add("animar-salida-derecha");
+      }
+
+      timerEntrada = setTimeout(() => {
+        const actual = perfumes[i];
+        const prev = perfumes[(i - 1 + perfumes.length) % perfumes.length];
+        const next = perfumes[(i + 1) % perfumes.length];
+
+        nombrePerfume.textContent = actual.nombre;
+
+        botella.src = actual.imagen;
+        sideLeft.src = prev.imagen;
+        sideRight.src = next.imagen;
+
+        botella.onerror = () => {
+          botella.src = "https://via.placeholder.com/240x360/111111/d8c08a?text=PERFUME";
+        };
+        sideLeft.onerror = () => {
+          sideLeft.src = "https://via.placeholder.com/100x180/111111/d8c08a?text=1";
+        };
+        sideRight.onerror = () => {
+          sideRight.src = "https://via.placeholder.com/100x180/111111/d8c08a?text=2";
+        };
+
+        botella.classList.remove("animar-salida-izquierda", "animar-salida-derecha");
+
+        if (direccion === 1) {
+          botella.classList.add("animar-entrada-derecha");
+        } else {
+          botella.classList.add("animar-entrada-izquierda");
+        }
+
+        animateSecondPlane();
+        renderDots(i);
+        renderMenuNumeros();
+
+        setTimeout(() => {
+          bloqueado = false;
+        }, 520);
+      }, 220);
+    }
+
+    function verDetalle() {
+      const actual = perfumes[indice];
+
+      catalogo.classList.add("hidden");
+      detalle.classList.remove("hidden");
+      detalle.classList.add("fade-in");
+      detalle.classList.add("show");
+
+      detalleImagen.src = actual.imagenDetalle || actual.imagen;
+      detalleNombre.textContent = actual.nombre;
+      detalleDescripcion.textContent = displayText(actual.descripcion, "Descripción por agregar.");
+      precio5ml.textContent = displayText(actual.precio5ml, "Por definir");
+      precio3ml.textContent = displayText(actual.precio3ml, "Por definir");
+
+      setTimeout(() => {
+        detalle.classList.remove("fade-in");
+      }, 800);
+    }
+
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particleList = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * devicePixelRatio;
+      canvas.height = window.innerHeight * devicePixelRatio;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      createParticles();
+    }
+
+    function createParticles() {
+      const count = Math.min(100, Math.floor(window.innerWidth / 16));
+      particleList = [];
+      for (let i = 0; i < count; i++) {
+        particleList.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: Math.random() * 1.8 + 0.6,
+          vx: (Math.random() - 0.5) * 0.28,
+          vy: -0.15 - Math.random() * 0.32,
+          alpha: Math.random() * 0.45 + 0.12
+        });
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (const p of particleList) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.y < -10) {
+          p.y = window.innerHeight + 10;
+          p.x = Math.random() * window.innerWidth;
+        }
+        if (p.x < -10) p.x = window.innerWidth + 10;
+        if (p.x > window.innerWidth + 10) p.x = -10;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 232, 186, ${p.alpha})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let glowX = mouseX;
+    let glowY = mouseY;
+    let dotX = mouseX;
+    let dotY = mouseY;
+
+    function animateCursor() {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+      dotX += (mouseX - dotX) * 0.18;
+      dotY += (mouseY - dotY) * 0.18;
+
+      cursorGlow.style.left = glowX + "px";
+      cursorGlow.style.top = glowY + "px";
+      cursorDot.style.left = dotX + "px";
+      cursorDot.style.top = dotY + "px";
+
+      requestAnimationFrame(animateCursor);
+    }
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorGlow.style.opacity = "1";
+      cursorDot.style.opacity = "1";
+    });
+
+    window.addEventListener("mouseleave", () => {
+      cursorGlow.style.opacity = "0";
+      cursorDot.style.opacity = "0";
+    });
+
+    window.addEventListener("resize", resizeCanvas);
+
+    btnDescubrir.addEventListener("click", irAlCatalogo);
+    btnVolverInicio.addEventListener("click", volverAlInicio);
+    btnAnterior.addEventListener("click", anterior);
+    btnSiguiente.addEventListener("click", siguiente);
+    btnExplorar.addEventListener("click", verDetalle);
+    btnRegresarCatalogo.addEventListener("click", volverAlCatalogo);
+    menuTab.addEventListener("click", toggleMenu);
+
+    categoryRow.addEventListener("click", (e) => {
+      const btn = e.target.closest(".category-chip");
+      if (!btn) return;
+      setFiltro(btn.dataset.filter);
+    });
+
+    resizeCanvas();
+    animateParticles();
+    animateCursor();
+
+    renderMenuNumeros();
+    renderDots(indice);
+    mostrarPerfume(indice, 1);
+  </script>
+</body>
+</html>
